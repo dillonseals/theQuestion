@@ -6,6 +6,59 @@
     <title>Adalo</title>
 </head>
 <body>
-    
+    <!-- Create new sheet button -->
+    <div id='newBtnDiv'>
+        <form>
+            <input type='submit' value='Create New Spreadsheet' id='newBtn' />
+        </form>
+        <br>
+    </div>
+    <!-- Display Sheet ID -->
+    <div id='sheetID'></div><br>
+    <!-- Display Rows & Columns -->
+    <div id='spreadsheet'></div>
+
+<script>
+// create new spreadsheet
+const createSheet = function() {
+    // do stuff
+    const data = {request: 'createSheet'}
+    fetch("./login.php", {
+            method: "POST",
+            body: JSON.stringify(data),
+    })
+    .then(res => res.json())
+    .then(function(response) {
+        // stuff
+    })
+    .catch(function(error) {
+    });
+}
+
+// update spreadsheet
+const updateSheet = function() {
+    // display sheet id
+
+    // display column titles
+    // NOTE - display add column button
+
+    // display rows in each column
+    // NOTE - display filled rows + 1 (add row button)
+}
+
+// add column
+const createColumn = function() {
+    // do stuff
+}
+
+// add row
+const createRow = function() {
+    // do stuff
+}
+
+// event listeners
+document.addEventListener('DOMContentLoaded', updateSheet, false);
+document.getElementById('newBtn', createSheet, false);
+</script>
 </body>
 </html>
