@@ -67,16 +67,18 @@ if ($json_obj['request'] == 'printInputs') {
     $name = $json_obj['name'];
     $rows = '';
     $columns = '';
+    $id = '';
     // find number of rows and columns
-    $getRCStmt = $conn->prepare('select rows, columns from sheets where name = ?');
+    $getRCStmt = $conn->prepare('select id, rows, columns from sheets where name = ?');
     if (!$getRCStmt) {
         printf("Query Prep Failed: %s\n", $conn->error);
     }  
     $getRCStmt->bind_param('s', $name);
     $getRCStmt->execute();
-    $getRCStmt->bind_result($bindRows, $bindColumns);
+    $getRCStmt->bind_result($bindID, $bindRows, $bindColumns);
 
     while ($getRCStmt->fetch()) {
+        $id = $bindID;
         $rows = $bindRows;
         $columns = $bindColumns;
     }
@@ -84,6 +86,7 @@ if ($json_obj['request'] == 'printInputs') {
     $getRCStmt->close();
 
     $my_array = array(
+        'id' => $id,
         'rows' => $rows,
         'columns' => $columns
     );
@@ -98,7 +101,7 @@ if ($json_obj['request'] == 'getData') {
     $id = $json_obj['id'];
     $my_array = array();
     // access db
-    $getDataStmt = $conn->prepare('select (content, position, type) from data where sheet = ?');
+    $getDataStmt = $conn->prepare('select content, position, type from data where sheetID = ?');
     if (!$getDataStmt) {
         printf("Query Prep Failed: %s\n", $conn->error);
     }

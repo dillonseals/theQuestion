@@ -94,7 +94,7 @@ const createSheet = function() {
 const printInputs = function(name) {
     console.log("printInputs");
     // get rows & columns
-    const data = {request: 'printInputs', name: name}
+    const data = {request: 'printInputs', name: name};
     fetch('./backend.php', {
         method: 'POST',
         body: JSON.stringify(data),
@@ -114,11 +114,27 @@ const printInputs = function(name) {
         }
         // update info
         document.getElementById('sheetInfo').innerHTML = 'Current Spreadsheet - ' + name;
+        // get data
+        getData(response.id);
     })
-    .catch(function(error){});
-    // NOTE - display add column button
+    .catch(function(error){})
+}
 
-    // NOTE - display filled rows + 1 (add row button)
+// load cell data
+const getData = function(id) {
+    console.log('getData');
+    const data = {request: 'getData', id: id};
+    fetch('./backend.php', {
+        method: 'POST',
+        body: JSON.stringify(data),
+    })
+    .then(res => res.json())
+    .then(function(response) {
+        console.log('response');
+        console.log(respone);
+        //
+    })
+    .catch(function(error){})
 }
 
 // add column
