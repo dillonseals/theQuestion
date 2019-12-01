@@ -21,6 +21,11 @@ create table data (
 ) engine = InnoDB default character set = utf8 collate = utf8_general_ci;
 
 
+<!-- Insertion -->
+insert into data (content, position, type, sheetID) values ('content', '0, 0', 'text', 1);
+insert into data (content, position, type, sheetID) values ('content', '0, 1', 'text', 1);
+insert into data (content, position, type, sheetID) values ('content', '1, 0', 'text', 1);
+
 
 <!-- DO NOT NEED -->
 create table users (

@@ -108,6 +108,7 @@ const printInputs = function(name) {
                 let newInput = document.createElement('INPUT');
                 newInput.id = i + ', ' + k;
                 newInput.setAttribute('type', 'text');
+                newInput.setAttribute('value', newInput.id);
                 document.getElementById('spreadsheet').appendChild(newInput);
             }
             document.getElementById('spreadsheet').appendChild(document.createElement('br'));
@@ -130,9 +131,13 @@ const getData = function(id) {
     })
     .then(res => res.json())
     .then(function(response) {
-        console.log('response');
-        console.log(respone);
-        //
+        console.log(response);
+        for (let i = 0; i < response.length; i++) {
+            let cell = document.getElementById(response[i].position);
+            console.log(response[i].position);
+            cell.setAttribute('value', response[i].content);
+            console.log(response[i].content);
+        }
     })
     .catch(function(error){})
 }
