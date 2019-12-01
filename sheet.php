@@ -15,8 +15,8 @@
         </form>
         <br>
     </div>
-    <!-- Display Sheet ID -->
-    <div id='sheetID'></div><br>
+    <!-- Display Sheet Info -->
+    <div id='sheetInfo'></div><br>
     <!-- Display Rows & Columns -->
     <div id='spreadsheet'></div>
 
@@ -27,7 +27,7 @@ const createSheet = function() {
     // do stuff
     let name = document.getElementById('newName').value;
     const data = {request: 'createSheet', name: name}
-    fetch("./login.php", {
+    fetch("./backend.php", {
             method: "POST",
             body: JSON.stringify(data),
     })
