@@ -3,7 +3,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <link rel="stylesheet" type="text/css" href="./sheet.css" />
+    <!--<link rel="stylesheet" type="text/css" href="./sheet.css" />-->
     <title>Adalo</title>
 </head>
 <body>
@@ -19,6 +19,14 @@
     <!-- Display Sheet Info -->
     <div id='sheetInfo'>Current Spreadsheet:<br></div><br>
     <!-- Display Rows & Columns -->
+    <div id='row1'>
+        row1, item1 - row1, item2 - row1, item3
+    </div><br>
+    <div id='row2'>
+        row2, item1 - row2, item2 - row2, item3
+    </div><br>
+
+
 
     <!--
     <div id='spreadsheet'>

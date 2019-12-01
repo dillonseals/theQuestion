@@ -53,7 +53,11 @@ if ($json_obj['request'] == 'createSheet') {
 }
 
 if ($json_obj['request'] == 'updateSheet') {
-    //
+    // variables
+    $id = $json_obj['id'];
+    $my_array = '';
+    // access db
+    
 }
 
 

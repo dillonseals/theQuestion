@@ -3,28 +3,18 @@
 create table sheets (
     id mediumint unsigned not null auto_increment,
     name varchar(30) not null,
+    rows tinyint unsigned not null,
+    columns tinyint unsigned not null,
     primary key (id)
 ) engine = InnoDB default character set = utf8 collate = utf8_general_ci;
 
 
 // type == text or int
-create table rows (
+create table data (
     id mediumint unsigned not null auto_increment,
     content varchar(300) not null,
-    sheet mediumint unsigned not null,
-    position mediumint unsigned not null,
+    position varchar(13) unsigned not null,
     type varchar(10) not null,
-    primary key (id),
-    foreign key (sheet) references sheets (id)
-) engine = InnoDB default character set = utf8 collate = utf8_general_ci;
-
-
-// type == text or int
-create table columns (
-    id mediumint unsigned not null auto_increment,
-    content varchar(300) not null,
-    position mediumint unsigned not null,
-    type varchar(10),
     sheet mediumint unsigned not null,
     primary key (id),
     foreign key (sheet) references sheets (id)
@@ -38,4 +28,16 @@ create table users (
     username varchar(30) not null,
     password varchar(40) not null,
     primary key (id)
+) engine = InnoDB default character set = utf8 collate = utf8_general_ci;
+
+
+// type == text or int
+create table columns (
+    id mediumint unsigned not null auto_increment,
+    content varchar(300) not null,
+    position mediumint unsigned not null,
+    type varchar(10),
+    sheet mediumint unsigned not null,
+    primary key (id),
+    foreign key (sheet) references sheets (id)
 ) engine = InnoDB default character set = utf8 collate = utf8_general_ci;
