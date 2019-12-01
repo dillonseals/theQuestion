@@ -135,14 +135,37 @@ if ($json_obj['request'] == 'changeData') {
         $my_array = array(
             'success' => false
         );
+    } else {
+        $my_array = array(
+            'success' => true
+        );
     }
     $changeStmt->bind_param('ss', $content, $position);
     $changeStmt->execute();
     $changeStmt->close();
 
-    $my_array = array(
-        'success' => true
-    );
+    echo json_encode($my_array);
+}
+
+if ($json_obj['request'] == 'createColumn') {
+    $id = $json_obj['id'];
+    $cols = $json_obj['newCols'];
+    $my_array ='';
+    // update db
+    $colStmt = $conn->prepare('update sheets set columns=? where id=?');
+    if (!$colStmt) {
+        printf("Query Prep Failed: %s\n", $conn->error);
+        $my_array = array(
+            'success' => false
+        );
+    } else {
+        $my_array = array(
+            'success' => true
+        );
+    }
+    $colStmt->bind_param('ii', $cols, $id);
+    $colStmt->execute();
+    $colStmt->close();
 
     echo json_encode($my_array);
 }

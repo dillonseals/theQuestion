@@ -93,6 +93,7 @@ const createSheet = function() {
 // print inputs for selected sheet
 const printInputs = function(name) {
     console.log("printInputs");
+    window.name = name;
     // get rows & columns
     const data = {request: 'printInputs', name: name};
     fetch('./backend.php', {
@@ -102,6 +103,9 @@ const printInputs = function(name) {
     .then(res => res.json())
     // print inputs
     .then(function(response) {
+        // set global variables
+        window.rows = response.rows;
+        window.columns = response.columns;
         // print rows and columns (row = i, column = k)
         for (let i = 0; i < response.rows; i++) {
             for (let k = 0; k < response.columns; k++) {
@@ -129,6 +133,7 @@ const printInputs = function(name) {
 // load cell data
 const getData = function(id) {
     console.log('getData');
+    window.id = id;
     const data = {request: 'getData', id: id};
     fetch('./backend.php', {
         method: 'POST',
@@ -161,7 +166,23 @@ const changeData = function() {
 
 // add column
 const createColumn = function() {
-    // do stuff
+    console.log('createColumn');
+    console.log(window.name);
+    console.log(window.id);
+    console.log(window.columns + 1);
+    const data = {request: 'createColumn', id: window.id, newCols: window.columns + 1};
+    fetch('./backend.php', {
+        method: 'POST',
+        body: JSON.stringify(data),
+    })
+    .then(res => res.json())
+    .then(function(response) {
+        console.log('response check');
+        if (response.success) {
+            printInputs(window.name);
+        }
+    })
+    .catch(function(error){})
 }
 
 // add row
