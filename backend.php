@@ -21,7 +21,7 @@ if ($json_obj['request'] == 'createSheet') {
     $id = '';
     $my_array = '';
     // access db
-    $createStmt = $conn->prepare('insert into sheets (name) values (?)');
+    $createStmt = $conn->prepare('insert into sheets (name, rows, columns) values (?, 0, 0)');
     if (!$createStmt) {
         printf("Query Prep Failed: %s\n", $conn->error);
         $my_array = array(
@@ -52,13 +52,64 @@ if ($json_obj['request'] == 'createSheet') {
     echo json_encode($my_array);
 }
 
-if ($json_obj['request'] == 'updateSheet') {
+// get number of rows and columns
+if ($json_obj['request'] == 'printInputs') {
     // variables
     $id = $json_obj['id'];
-    $my_array = '';
-    // access db
-    
+    $my_array = array();
+    $rows = '';
+    $columns = '';
+    // find number of rows and columns
+    $getRCStmt = $conn->prepare('select (rows, columns) from sheets where id = ?');
+    if (!$getRCStmt) {
+        printf("Query Prep Failed: %s\n", $conn->error);
+    }  
+    $getRCStmt->bind_param('i', $id);
+    $getRCStmt->execute();
+    $getRCStmt->bind_result($bindRows, $bindColumns);
+
+    while ($getRCStmt->fetch()) {
+        $rows = $bindRows;
+        $columns = $bindColumns;
+    }
+
+    $getRCStmt->close();
+
+    echo json_encode($my_array);
 }
+
+
+// get sheet data
+if ($json_obj['request'] == 'getData') {
+    // variables
+    $id = $json_obj['id'];
+    $my_array = array();
+    // access db
+    $getDataStmt = $conn->prepare('select (content, position, type) from data where sheet = ?');
+    if (!$getDataStmt) {
+        printf("Query Prep Failed: %s\n", $conn->error);
+    }
+    $getDataStmt->bind_param('i', $id);
+    $getDataStmt->execute();
+    $getDataStmt->bind_result($bindContent, $bindPosition, $bindType);
+
+    while ($getDataStmt->fetch()) {
+        $temp = array(
+            'content' => $bindContent,
+            'position' => $bindPosition,
+            'type' => $bindType
+        );
+        array_push($my_array, $temp);
+    }
+
+    $getDataStmt->close();
+
+    echo json_encode($my_array);
+}
+
+
+
+
 
 
 ?>

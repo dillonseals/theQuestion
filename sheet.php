@@ -48,14 +48,14 @@ const createSheet = function() {
     // do stuff
     let name = document.getElementById('newName').value;
     const data = {request: 'createSheet', name: name}
-    fetch("./backend.php", {
-        method: "POST",
+    fetch('./backend.php', {
+        method: 'POST',
         body: JSON.stringify(data),
     })
     .then(res => res.json())
     .then(function(response) {
         if (response.success) {
-            updateSheet(response.id);
+            printInputs(response.id);
         } else {
             console.log("Error - success == false");
         }
@@ -65,21 +65,19 @@ const createSheet = function() {
 }
 
 // update spreadsheet
-const updateSheet = function(id) {
+const printInputs = function(id) {
     // check sheet id
-    const data = {request: 'updateSheet', id: id}
+    const data = {request: 'printInputs', id: id}
     fetch('./backend.php', {
         method: 'POST',
         body: JSON.stringify(data),
     })
     .then(res => res.json())
     .then(function(response) {
-        // stuff
+        // print rows and columns
     })
-    // display column titles
     // NOTE - display add column button
 
-    // display rows in each column
     // NOTE - display filled rows + 1 (add row button)
 }
 
