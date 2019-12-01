@@ -19,13 +19,17 @@
     <!-- Display Sheet Info -->
     <div id='sheetInfo'>Current Spreadsheet:<br></div><br>
     <!-- Display Rows & Columns -->
+    <div id='spreadsheet'></div>
+
+
+    <!--
     <div id='row1'>
         row1, item1 - row1, item2 - row1, item3
     </div><br>
     <div id='row2'>
         row2, item1 - row2, item2 - row2, item3
     </div><br>
-
+    -->
 
 
     <!--
@@ -64,18 +68,30 @@ const createSheet = function() {
     });
 }
 
-// update spreadsheet
+// print inputs for selected sheet
 const printInputs = function(id) {
-    // check sheet id
+    console.log("printInputs");
+    // get rows & columns
     const data = {request: 'printInputs', id: id}
     fetch('./backend.php', {
         method: 'POST',
         body: JSON.stringify(data),
     })
     .then(res => res.json())
+    // print inputs
     .then(function(response) {
         // print rows and columns
+        for (let i = 0; i < response.rows; i++) {
+            for (let k = 0; k < response.columns; k++) {
+                let newInput = document.createElement('div');
+                newInput.id = i + ', ' + k;
+                newInput.innerHTML = '<input id=' + i + ', ' + k + ' type="text" />'
+                document.getElementById('spreadsheet').appendChild(newInput);
+            }
+            document.getElementById('spreadsheet').appendChild(document.createElement('br'));
+        }
     })
+    .catch(function(error){});
     // NOTE - display add column button
 
     // NOTE - display filled rows + 1 (add row button)

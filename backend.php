@@ -56,7 +56,6 @@ if ($json_obj['request'] == 'createSheet') {
 if ($json_obj['request'] == 'printInputs') {
     // variables
     $id = $json_obj['id'];
-    $my_array = array();
     $rows = '';
     $columns = '';
     // find number of rows and columns
@@ -74,6 +73,11 @@ if ($json_obj['request'] == 'printInputs') {
     }
 
     $getRCStmt->close();
+
+    $my_array = array(
+        'rows' => $rows,
+        'columns' => $columns
+    );
 
     echo json_encode($my_array);
 }
