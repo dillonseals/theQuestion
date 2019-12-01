@@ -27,11 +27,20 @@ if ($json_obj['request'] == 'createSheet') {
         $my_array = array(
             "success" => false
         );
+    } else {
+        $my_array = array(
+            'success' => true
+        );
     }
     $createStmt->bind_param("s", $name);
     $createStmt->execute();
     $createStmt->close();
-    // TODO - should only run if insertion successful
+
+    echo json_encode($my_array);
+
+
+
+   /*  // TODO - should only run if insertion successful
     $getIDStmt = $conn->prepare('select id from sheets where name = ?');
     if (!$getIDStmt) {
         printf("Query Prep Failed: %s\n", $conn->error);
@@ -49,21 +58,21 @@ if ($json_obj['request'] == 'createSheet') {
         "id" => $id
     );
 
-    echo json_encode($my_array);
+    echo json_encode($my_array); */
 }
 
 // get number of rows and columns
 if ($json_obj['request'] == 'printInputs') {
     // variables
-    $id = $json_obj['id'];
+    $name = $json_obj['name'];
     $rows = '';
     $columns = '';
     // find number of rows and columns
-    $getRCStmt = $conn->prepare('select (rows, columns) from sheets where id = ?');
+    $getRCStmt = $conn->prepare('select rows, columns from sheets where name = ?');
     if (!$getRCStmt) {
         printf("Query Prep Failed: %s\n", $conn->error);
     }  
-    $getRCStmt->bind_param('i', $id);
+    $getRCStmt->bind_param('s', $name);
     $getRCStmt->execute();
     $getRCStmt->bind_result($bindRows, $bindColumns);
 

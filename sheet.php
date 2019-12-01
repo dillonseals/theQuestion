@@ -7,6 +7,14 @@
     <title>Adalo</title>
 </head>
 <body>
+    <!-- Sheet Name Input --> 
+    <div id='existingSheetName'>
+        <form>
+            Load Existing Sheet<br>
+            <input type='text' placeholder='name' id='loadName' />
+            <input type='button' value='Load' id='loadNameBtn' />
+        </form>
+    </div>
     <!-- Create new sheet button -->
     <div id='newBtnDiv'>
         <form>
@@ -53,6 +61,13 @@
     -->
 
 <script>
+// load existing spreadsheet
+const loadSheet = function() {
+    console.log('loadSheet');
+    let name = document.getElementById('loadName').value;
+    printInputs(name);
+}
+
 // create new spreadsheet
 const createSheet = function() {
     console.log("createSheet");
@@ -66,7 +81,7 @@ const createSheet = function() {
     .then(res => res.json())
     .then(function(response) {
         if (response.success) {
-            printInputs(response.id);
+            printInputs(name);
         } else {
             console.log("Error - success == false");
         }
@@ -76,10 +91,10 @@ const createSheet = function() {
 }
 
 // print inputs for selected sheet
-const printInputs = function(id) {
+const printInputs = function(name) {
     console.log("printInputs");
     // get rows & columns
-    const data = {request: 'printInputs', id: id}
+    const data = {request: 'printInputs', name: name}
     fetch('./backend.php', {
         method: 'POST',
         body: JSON.stringify(data),
@@ -97,6 +112,8 @@ const printInputs = function(id) {
             }
             document.getElementById('spreadsheet').appendChild(document.createElement('br'));
         }
+        // update info
+        document.getElementById('sheetInfo').innerHTML = 'Current Spreadsheet - ' + name;
     })
     .catch(function(error){});
     // NOTE - display add column button
@@ -115,8 +132,11 @@ const createRow = function() {
 }
 
 // event listeners
-//document.addEventListener('DOMContentLoaded', updateSheet, false);
+//document.addEventListener('DOMContentLoaded', printInputs, false);
 document.getElementById('newSheetBtn').addEventListener('click', createSheet, false);
+document.getElementById('newRowBtn').addEventListener('click', createRow, false);
+document.getElementById('newColBtn').addEventListener('click', createColumn, false);
+document.getElementById('loadNameBtn').addEventListener('click', loadSheet, false);
 </script>
 </body>
 </html>
