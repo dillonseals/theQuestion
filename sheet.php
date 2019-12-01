@@ -45,7 +45,7 @@ const createSheet = function() {
 
 // update spreadsheet
 const updateSheet = function() {
-    // display sheet id
+    // check sheet id
 
     // display column titles
     // NOTE - display add column button

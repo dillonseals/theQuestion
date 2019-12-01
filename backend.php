@@ -18,9 +18,8 @@ $json_obj = json_decode($json_str, true);
 if ($json_obj['request'] == 'createSheet') {
     // variables
     $name = $json_obj['name'];
-    $my_array = array(
-        "success" => true
-    );
+    $id = '';
+    $my_array = '';
     // access db
     $createStmt = $conn->prepare('insert into sheets (name) values (?)');
     if (!$createStmt) {
@@ -32,6 +31,23 @@ if ($json_obj['request'] == 'createSheet') {
     $createStmt->bind_param("s", $name);
     $createStmt->execute();
     $createStmt->close();
+    // TODO - should only run if insertion successful
+    $getIDStmt = $conn->prepare('select id from sheets where name = ?');
+    if (!$getIDStmt) {
+        printf("Query Prep Failed: %s\n", $conn->error);
+    }
+    $getIDStmt->bind_param('s', $name);
+    $getIDStmt->execute();
+    $getIDStmt->bind_result($bindID);
+    while ($getIDStmt->fetch()) {
+        $id = $bindID;
+    }
+    $getIDStmt->close();
+
+    $my_array = array(
+        "success" => true,
+        "id" => $id
+    );
 
     echo json_encode($my_array);
 }
