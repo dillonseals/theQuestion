@@ -9,6 +9,8 @@
     <!-- Create new sheet button -->
     <div id='newBtnDiv'>
         <form>
+            Create a New Spreadsheet<br>
+            <input type='text' placeholder='name' id='newName' />
             <input type='submit' value='Create New Spreadsheet' id='newBtn' />
         </form>
         <br>
@@ -22,7 +24,8 @@
 // create new spreadsheet
 const createSheet = function() {
     // do stuff
-    const data = {request: 'createSheet'}
+    let name = document.getElementById('newName').value;
+    const data = {request: 'createSheet', name: name}
     fetch("./login.php", {
             method: "POST",
             body: JSON.stringify(data),
