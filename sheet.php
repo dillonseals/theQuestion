@@ -3,6 +3,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" type="text/css" href="./sheet.css" />
     <title>Adalo</title>
 </head>
 <body>
@@ -16,9 +17,21 @@
         <br>
     </div>
     <!-- Display Sheet Info -->
-    <div id='sheetInfo'></div><br>
+    <div id='sheetInfo'>Current Spreadsheet:<br></div><br>
     <!-- Display Rows & Columns -->
-    <div id='spreadsheet'></div>
+
+    <!--
+    <div id='spreadsheet'>
+        <div class='item1'>1, 1</div>
+        <div class='item2'>2, 1</div>
+        <div class='item3'>3, 1</div>
+        <div class='item4'>4, 1</div>
+        <div class='item5'>1, 2</div>
+        <div class='item4'>4</div>
+        <div class='item4'>4</div>
+        <div class='item4'>4</div>
+    </div>
+    -->
 
 <script>
 // create new spreadsheet
@@ -28,13 +41,13 @@ const createSheet = function() {
     let name = document.getElementById('newName').value;
     const data = {request: 'createSheet', name: name}
     fetch("./backend.php", {
-            method: "POST",
-            body: JSON.stringify(data),
+        method: "POST",
+        body: JSON.stringify(data),
     })
     .then(res => res.json())
     .then(function(response) {
         if (response.success) {
-            updateSheet();
+            updateSheet(response.id);
         } else {
             console.log("Error - success == false");
         }
@@ -44,9 +57,17 @@ const createSheet = function() {
 }
 
 // update spreadsheet
-const updateSheet = function() {
+const updateSheet = function(id) {
     // check sheet id
-
+    const data = {request: 'updateSheet', id: id}
+    fetch('./backend.php', {
+        method: 'POST',
+        body: JSON.stringify(data),
+    })
+    .then(res => res.json())
+    .then(function(response) {
+        // stuff
+    })
     // display column titles
     // NOTE - display add column button
 
@@ -65,7 +86,7 @@ const createRow = function() {
 }
 
 // event listeners
-document.addEventListener('DOMContentLoaded', updateSheet, false);
+//document.addEventListener('DOMContentLoaded', updateSheet, false);
 document.getElementById('newBtn').addEventListener('click', createSheet, false);
 </script>
 </body>

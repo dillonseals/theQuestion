@@ -52,5 +52,9 @@ if ($json_obj['request'] == 'createSheet') {
     echo json_encode($my_array);
 }
 
+if ($json_obj['request'] == 'updateSheet') {
+    //
+}
+
 
 ?>
