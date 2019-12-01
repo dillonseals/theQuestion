@@ -94,7 +94,6 @@ if ($json_obj['request'] == 'printInputs') {
     echo json_encode($my_array);
 }
 
-
 // get sheet data
 if ($json_obj['request'] == 'getData') {
     // variables
@@ -123,7 +122,30 @@ if ($json_obj['request'] == 'getData') {
     echo json_encode($my_array);
 }
 
+// update cell data
+if ($json_obj['request'] == 'changeData') {
+    // variables
+    $content = $json_obj['content'];
+    $position = $json_obj['position'];
+    $my_array = '';
+    // update db
+    $changeStmt = $conn->prepare('update data set content=? where position=?');
+    if (!$changeStmt) {
+        printf("Query Prep Failed: %s\n", $conn->error);
+        $my_array = array(
+            'success' => false
+        );
+    }
+    $changeStmt->bind_param('ss', $content, $position);
+    $changeStmt->execute();
+    $changeStmt->close();
 
+    $my_array = array(
+        'success' => true
+    );
+
+    echo json_encode($my_array);
+}
 
 
 

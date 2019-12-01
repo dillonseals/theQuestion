@@ -110,6 +110,8 @@ const printInputs = function(name) {
                 newInput.setAttribute('type', 'text');
                 newInput.setAttribute('value', newInput.id);
                 document.getElementById('spreadsheet').appendChild(newInput);
+                // update db when input is changed
+                newInput.addEventListener('onkeyup', dataChange, false);
             }
             document.getElementById('spreadsheet').appendChild(document.createElement('br'));
         }
@@ -131,13 +133,25 @@ const getData = function(id) {
     })
     .then(res => res.json())
     .then(function(response) {
-        console.log(response);
         for (let i = 0; i < response.length; i++) {
             let cell = document.getElementById(response[i].position);
-            console.log(response[i].position);
             cell.setAttribute('value', response[i].content);
-            console.log(response[i].content);
         }
+    })
+    .catch(function(error){})
+}
+
+// update cell data
+const dataChange = function() {
+    console.log('dataChange');
+    const data = {request: 'dataChange', content: this.value, position: this.id};
+    fetch('./backend.php' {
+        method: 'POST',
+        body: JSON.stringify(data),
+    })
+    .then(res => res.json())
+    .then(function(response) {
+        //
     })
     .catch(function(error){})
 }
