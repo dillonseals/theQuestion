@@ -110,15 +110,17 @@ const printInputs = function(name) {
         for (let i = 0; i < response.rows; i++) {
             for (let k = 0; k < response.columns; k++) {
                 let newInput = document.createElement('INPUT');
-                newInput.id = i + ', ' + k;
+                let newId = i + ', ' + k;
+                newInput.setAttribute('id', newId);
                 newInput.setAttribute('type', 'text');
                 newInput.setAttribute('value', newInput.id);
-                // update db when input is changed
-                newInput.addEventListener('onchange', changeData, false);
                 //document.getElementById(newInput.id).addEventListener('onkeyup', changeData, false);
                 // why does the above break things??
                 // append cell to spreadsheet
                 document.getElementById('spreadsheet').appendChild(newInput);
+                // update db when input is changed
+                //newInput.addEventListener('onchange', changeData, false);
+                //document.getElementById(newId).addEventListener('onchange', changeData, false);
             }
             document.getElementById('spreadsheet').appendChild(document.createElement('br'));
         }
