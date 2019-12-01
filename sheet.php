@@ -23,6 +23,7 @@
 <script>
 // create new spreadsheet
 const createSheet = function() {
+    console.log("createSheet");
     // do stuff
     let name = document.getElementById('newName').value;
     const data = {request: 'createSheet', name: name}
@@ -32,7 +33,11 @@ const createSheet = function() {
     })
     .then(res => res.json())
     .then(function(response) {
-        // stuff
+        if (response.success) {
+            updateSheet();
+        } else {
+            console.log("Error - success == false");
+        }
     })
     .catch(function(error) {
     });
@@ -61,7 +66,7 @@ const createRow = function() {
 
 // event listeners
 document.addEventListener('DOMContentLoaded', updateSheet, false);
-document.getElementById('newBtn', createSheet, false);
+document.getElementById('newBtn').addEventListener('click', createSheet, false);
 </script>
 </body>
 </html>
