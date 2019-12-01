@@ -170,6 +170,29 @@ if ($json_obj['request'] == 'createColumn') {
     echo json_encode($my_array);
 }
 
+if ($json_obj['request'] == 'createRow') {
+    $id = $json_obj['id'];
+    $rows = $json_obj['newRows'];
+    $my_array ='';
+    // update db
+    $rowStmt = $conn->prepare('update sheets set rows=? where id=?');
+    if (!$rowStmt) {
+        printf("Query Prep Failed: %s\n", $conn->error);
+        $my_array = array(
+            'success' => false
+        );
+    } else {
+        $my_array = array(
+            'success' => true
+        );
+    }
+    $rowStmt->bind_param('ii', $rows, $id);
+    $rowStmt->execute();
+    $rowStmt->close();
+
+    echo json_encode($my_array);
+}
+
 
 
 

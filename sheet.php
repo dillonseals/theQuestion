@@ -167,9 +167,6 @@ const changeData = function() {
 // add column
 const createColumn = function() {
     console.log('createColumn');
-    console.log(window.name);
-    console.log(window.id);
-    console.log(window.columns + 1);
     const data = {request: 'createColumn', id: window.id, newCols: window.columns + 1};
     fetch('./backend.php', {
         method: 'POST',
@@ -177,8 +174,8 @@ const createColumn = function() {
     })
     .then(res => res.json())
     .then(function(response) {
-        console.log('response check');
         if (response.success) {
+            // reset spreadsheet div
             document.getElementById('spreadsheet').innerHTML = '';
             printInputs(window.name);
         }
@@ -188,7 +185,21 @@ const createColumn = function() {
 
 // add row
 const createRow = function() {
-    // do stuff
+    console.log('createRow');
+    const data = {request: 'createRow', id: window.id, newRows: window.rows + 1};
+    fetch('./backend.php', {
+        method: 'POST',
+        body: JSON.stringify(data),
+    })
+    .then(res => res.json())
+    .then(function(response) {
+        if (response.success) {
+            // reset spreadsheet div
+            document.getElementById('spreadsheet').innerHTML = '';
+            printInputs(window.name);
+        }
+    })
+    .catch(function(error){})
 }
 
 // event listeners
