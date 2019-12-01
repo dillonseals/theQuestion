@@ -105,9 +105,9 @@ const printInputs = function(name) {
         // print rows and columns (row = i, column = k)
         for (let i = 0; i < response.rows; i++) {
             for (let k = 0; k < response.columns; k++) {
-                let newInput = document.createElement('div');
+                let newInput = document.createElement('INPUT');
                 newInput.id = i + ', ' + k;
-                newInput.innerHTML = '<input id=' + i + ', ' + k + ' type="text" />'
+                newInput.setAttribute('type', 'text');
                 document.getElementById('spreadsheet').appendChild(newInput);
             }
             document.getElementById('spreadsheet').appendChild(document.createElement('br'));
