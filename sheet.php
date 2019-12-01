@@ -109,9 +109,12 @@ const printInputs = function(name) {
                 newInput.id = i + ', ' + k;
                 newInput.setAttribute('type', 'text');
                 newInput.setAttribute('value', newInput.id);
-                document.getElementById('spreadsheet').appendChild(newInput);
                 // update db when input is changed
-                newInput.addEventListener('onkeyup', dataChange, false);
+                newInput.addEventListener('onchange', changeData, false);
+                //document.getElementById(newInput.id).addEventListener('onkeyup', changeData, false);
+                // why does the above break things??
+                // append cell to spreadsheet
+                document.getElementById('spreadsheet').appendChild(newInput);
             }
             document.getElementById('spreadsheet').appendChild(document.createElement('br'));
         }
@@ -142,10 +145,10 @@ const getData = function(id) {
 }
 
 // update cell data
-const dataChange = function() {
-    console.log('dataChange');
-    const data = {request: 'dataChange', content: this.value, position: this.id};
-    fetch('./backend.php' {
+const changeData = function() {
+    console.log('changeData');
+    const data = {request: 'changeData', content: this.value, position: this.id};
+    fetch('./backend.php', {
         method: 'POST',
         body: JSON.stringify(data),
     })
