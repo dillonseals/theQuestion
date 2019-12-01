@@ -13,11 +13,11 @@ create table sheets (
 create table data (
     id mediumint unsigned not null auto_increment,
     content varchar(300) not null,
-    position varchar(13) unsigned not null,
+    position varchar(13) not null,
     type varchar(10) not null,
-    sheet mediumint unsigned not null,
+    sheetID mediumint unsigned not null,
     primary key (id),
-    foreign key (sheet) references sheets (id)
+    foreign key (sheetID) references sheets (id)
 ) engine = InnoDB default character set = utf8 collate = utf8_general_ci;
 
 

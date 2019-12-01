@@ -12,12 +12,19 @@
         <form>
             Create a New Spreadsheet<br>
             <input type='text' placeholder='name' id='newName' />
-            <input type='submit' value='Create New Spreadsheet' id='newBtn' />
+            <input type='button' value='Create New Spreadsheet' id='newSheetBtn' />
         </form>
         <br>
     </div>
     <!-- Display Sheet Info -->
     <div id='sheetInfo'>Current Spreadsheet:<br></div><br>
+    <!-- New Column and New Row Buttons -->
+    <div id='newButtons'>
+        <form>
+            <input type='button' value='Create New Row' id='newRowBtn' />
+            <input type='button' value='Create New Column' id='newColBtn' />
+        </form>
+    </div><br>
     <!-- Display Rows & Columns -->
     <div id='spreadsheet'></div>
 
@@ -80,7 +87,7 @@ const printInputs = function(id) {
     .then(res => res.json())
     // print inputs
     .then(function(response) {
-        // print rows and columns
+        // print rows and columns (row = i, column = k)
         for (let i = 0; i < response.rows; i++) {
             for (let k = 0; k < response.columns; k++) {
                 let newInput = document.createElement('div');
@@ -109,7 +116,7 @@ const createRow = function() {
 
 // event listeners
 //document.addEventListener('DOMContentLoaded', updateSheet, false);
-document.getElementById('newBtn').addEventListener('click', createSheet, false);
+document.getElementById('newSheetBtn').addEventListener('click', createSheet, false);
 </script>
 </body>
 </html>
