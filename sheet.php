@@ -179,6 +179,7 @@ const createColumn = function() {
     .then(function(response) {
         console.log('response check');
         if (response.success) {
+            document.getElementById('spreadsheet').innerHTML = '';
             printInputs(window.name);
         }
     })
